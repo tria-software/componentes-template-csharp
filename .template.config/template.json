@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Guilherme Camargo",
+  "classifications": [
+    "WebAPI",
+    "MVC"
+  ],
+  "identity": "TriaSoftware.ComponentesTemplate",
+  "name": "Tria Software Componentes Template",
+  "shortName": "componentstemplate",
+  "sourceName": "ProjetoTemplate",
+  "preferNameDirectory": false,
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "symbols": {
+    "ProjectName": {
+      "type": "generated",
+      "generator": "projnamesafe",
+      "defaultValue": "ProjetoTemplate",
+      "replaces": "ProjetoTemplate"
+    },
+    "EntityName": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "EntityName",
+      "fileRename": "EntityName",
+      "replaces": "EntityName"
+    },
+    "IncludeController": {
+      "type": "bool",
+      "defaultValue": "true",
+      "description": "Include the Controller"
+    },
+    "IncludeService": {
+      "type": "bool",
+      "defaultValue": "true",
+      "description": "Include the Service"
+    },
+    "IncludeModel": {
+      "type": "bool",
+      "defaultValue": "true",
+      "description": "Include the Model"
+    },
+    "IncludeDTO": {
+      "type": "bool",
+      "defaultValue": "true",
+      "description": "Include the DTO"
+    },
+    "IncludeModelsConfig": {
+      "type": "bool",
+      "defaultValue": "true",
+      "description": "Include the Models Configuration"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "IncludeController",
+          "exclude": [
+            "{{ProjectName}}.API/Controllers"
+          ]
+        },
+        {
+          "condition": "IncludeService",
+          "exclude": [
+            "{{ProjectName}}.BL/"
+          ]
+        },
+        {
+          "condition": "IncludeModel",
+          "exclude": [
+            "{{ProjectName}}.Domain/Models"
+          ]
+        },
+        {
+          "condition": "IncludeDTO",
+          "exclude": [
+            "{{ProjectName}}.Domain/DTO"
+          ]
+        },
+        {
+          "condition": "IncludeModelsConfig",
+          "exclude": [
+            "{{ProjectName}}.Repository/ModelsConfiguration"
+          ]
+        }
+      ]
+    }
+  ],
+  "postActions": [
+    {
+      "condition": "IncludeService",
+      "description": "Register the new service in IocConfig.cs",
+      "manualInstructions": [
+        {
+          "text": "Add the service registration in IocConfig.cs"
+        }
+      ],
+      "actionId": "48d95235-fbb4-4c7a-9b55-98d3409b38b7",
+      "args": {
+        "fileRelativePath": "{{ProjectName}}.API/Configuration/IocConfig.cs",
+        "searchText": "// Registro de BOs (Business Objects)",
+        "newText": "services.AddTransient<IEntityNameBO, EntityNameBO>();"
+      }
+    },
+    {
+      "condition": "IncludeModel",
+      "description": "Register the new model in ProjetoTemplateDbContext.cs",
+      "manualInstructions": [
+        {
+          "text": "Add the new model registration in ProjetoTemplateDbContext.cs"
+        }
+      ],
+      "actionId": "48d95235-fbb4-4c7a-9b55-98d3409b38b7",
+      "args": {
+        "fileRelativePath": "{{ProjectName}}.Repository/Configuration/ProjetoTemplateDbContext.cs",
+        "searchText": "// Add DbSet for each entity",
+        "newText": "public virtual DbSet<EntityName> EntityName { get; set; }"
+      }
+    }
+  ]
+}
