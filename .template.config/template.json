@@ -88,6 +88,16 @@
           ]
         }
       ]
+    },
+    {
+      "modifiers": [
+        {
+          "exclude": [
+            ".git/**",
+            ".github/**"
+          ]
+        }
+      ]
     }
   ],
   "postActions": [
