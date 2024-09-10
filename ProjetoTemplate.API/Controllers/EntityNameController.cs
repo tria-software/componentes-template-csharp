@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoTemplate.BL;
 using ProjetoTemplate.Domain.DTO;
-using ProjetoTemplate.Domain.DTO.Authentication;
 using ProjetoTemplate.Domain.DTO.EntityName;
-using System;
-using System.Threading.Tasks;
 
 namespace ProjetoTemplate.API.Controllers
 {
@@ -16,11 +12,11 @@ namespace ProjetoTemplate.API.Controllers
     [Produces("application/json")]
     public class EntityNameController : ControllerBase
     {
-        private readonly IEntityNameBO _EntityNameBO;
+        private readonly IEntityNameBO _entityNameBO;
 
-        public EntityNameController(IEntityNameBO EntityNameBO)
+        public EntityNameController(IEntityName entityName)
         {
-            _EntityNameBO = EntityNameBO;
+            _entityNameBO = entityName;
         }
 
         [HttpPost("GetAll")]
@@ -28,7 +24,7 @@ namespace ProjetoTemplate.API.Controllers
         {
             try
             {
-                var result = await _EntityNameBO.GetAll(filter);
+                var result = await _entityNameBO.GetAll(filter);
                 return Ok(result);
             }
             catch (Exception)
@@ -38,11 +34,11 @@ namespace ProjetoTemplate.API.Controllers
         }
 
         [HttpPost("Save")]
-        public async Task<IActionResult> Save([FromBody] Domain.DTO.EntityName.EntityNameDTO EntityName)
+        public async Task<IActionResult> Save([FromBody] Domain.DTO.EntityName.EntityNameDTO entityName)
         {
             try
             {
-                var result = await _EntityNameBO.SaveUpdate(EntityName);
+                var result = await _entityNameBO.SaveUpdate(entityName);
                 return Ok(result);
             }
             catch (Exception)
@@ -52,11 +48,11 @@ namespace ProjetoTemplate.API.Controllers
         }
 
         [HttpPatch("Update")]
-        public async Task<IActionResult> Update([FromBody] Domain.DTO.EntityName.EntityNameDTO EntityName)
+        public async Task<IActionResult> Update([FromBody] Domain.DTO.EntityName.EntityNameDTO entityName)
         {
             try
             {
-                var result = await _EntityNameBO.SaveUpdate(EntityName);
+                var result = await _entityNameBO.SaveUpdate(entityName);
                 return Ok(result);
             }
             catch (Exception)
@@ -70,7 +66,7 @@ namespace ProjetoTemplate.API.Controllers
         {
             try
             {
-                var result = await _EntityNameBO.GetById(Id);
+                var result = await _entityNameBO.GetById(Id);
                 return Ok(result);
             }
             catch (Exception)
@@ -84,7 +80,7 @@ namespace ProjetoTemplate.API.Controllers
         {
             try
             {
-                var result = await _EntityNameBO.Delete(Id);
+                var result = await _entityNameBO.Delete(Id);
                 return Ok(result);
             }
             catch (Exception)
@@ -98,7 +94,7 @@ namespace ProjetoTemplate.API.Controllers
         {
             try
             {
-                var result = await _EntityNameBO.ActivateDisable(model);
+                var result = await _entityNameBO.ActivateDisable(model);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -112,7 +108,7 @@ namespace ProjetoTemplate.API.Controllers
         {
             try
             {
-                var result = await _EntityNameBO.Export2Excel(filter);
+                var result = await _entityNameBO.Export2Excel(filter);
                 return File(result.Memory, result.FileExtension, result.FileName);
             }
             catch (Exception ex)

@@ -31,7 +31,7 @@ namespace ProjetoTemplate.Data.Repository
 
                 if (!string.IsNullOrEmpty(filter.Search))
                 {
-                    query = query.Where(x => x.Name.ToLower().Contains(filter.Search.ToLower());
+                    query = query.Where(x => x.Id.ToString().Contains(filter.Search.ToLower()));
                 }
 
                 var queryResult = from q in query.OrderBy(o => o.CreateDate)
@@ -58,19 +58,17 @@ namespace ProjetoTemplate.Data.Repository
             }
         }
 
-        public async Task<bool> SaveUpdate(EntityNameDTO EntityNameDto)
+        public async Task<bool> SaveUpdate(EntityNameDTO entityNameDto)
         {
             try
             {
-                var sendEmail = true;
-                var EntityName = _mapper.Map<EntityName>(EntityNameDto);
-                if (EntityName != null)
+                var entityName = _mapper.Map<EntityName>(entityNameDto);
+                if (entityName != null)
                 {
-                    if (EntityName.Id != 0)
-                        _context.Update(EntityName);
-                    
+                    if (entityName.Id != 0)
+                        _context.Update(entityName);                    
                     else
-                        _context.Add(EntityName);
+                        _context.Add(entityName);
                     
                     await _context.SaveChangesAsync();
 
@@ -85,15 +83,15 @@ namespace ProjetoTemplate.Data.Repository
             }
         }
 
-        public async Task<bool> Delete(long EntityNameId)
+        public async Task<bool> Delete(long entityNameId)
         {
             try
             {
-                var EntityName = await _context.EntityName.FindAsync(EntityNameId);
+                var entityName = await _context.EntityName.FindAsync(entityNameId);
 
-                if (EntityName != null)
+                if (entityName != null)
                 {
-                    _context.Remove(EntityName);
+                    _context.Remove(entityName);
                     await _context.SaveChangesAsync();
 
                     return true;
@@ -107,14 +105,14 @@ namespace ProjetoTemplate.Data.Repository
             }
         }
 
-        public async Task<EntityNameDTO> GetById(long EntityNameId)
+        public async Task<EntityNameDTO> GetById(long entityNameId)
         {
             try
             {
-                var EntityName = await _context.EntityName.FirstAsync(x => x.Id == EntityNameId);
+                var entityName = await _context.EntityName.FirstAsync(x => x.Id == entityNameId);
 
-                if (EntityName != null)
-                    return _mapper.Map<EntityNameDTO>(EntityName);
+                if (entityName != null)
+                    return _mapper.Map<EntityNameDTO>(entityName);
 
                 return null;
             }

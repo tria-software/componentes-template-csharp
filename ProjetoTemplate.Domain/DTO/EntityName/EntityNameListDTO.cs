@@ -8,5 +8,8 @@ namespace ProjetoTemplate.Domain.DTO.EntityName
 
         [DisplayName("Status")]
         public bool Status { get; set; }
+
+        [DisplayName("Data Criação")]
+        public DateTime? CreateDate { get; set; }
     }
 }

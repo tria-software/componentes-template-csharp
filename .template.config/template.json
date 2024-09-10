@@ -16,9 +16,10 @@
   },
   "symbols": {
     "ProjectName": {
-      "type": "generated",
-      "generator": "projnamesafe",
-      "defaultValue": "ProjetoTemplate",
+      "type": "parameter",
+      "datatype": "string",
+      "isRequired": true,
+      "fileRename": "ProjetoTemplate",
       "replaces": "ProjetoTemplate"
     },
     "EntityName": {
@@ -27,6 +28,16 @@
       "defaultValue": "EntityName",
       "fileRename": "EntityName",
       "replaces": "EntityName"
+    },
+    "entityName": {
+      "type": "generated",
+      "generator": "casing",
+      "parameters": {
+        "source": "EntityName",
+        "toLower": true,
+        "toCamelCase": true
+      },
+      "replaces": "entityName"
     },
     "IncludeController": {
       "type": "bool",
@@ -120,7 +131,7 @@
           "text": "Add the new model registration in ProjetoTemplateDbContext.cs"
         }
       ],
-      "actionId": "48d95235-fbb4-4c7a-9b55-98d3409b38b7",
+      "actionId": "895c335b-48d6-4014-b708-c5e89f1483da",
       "args": {
         "fileRelativePath": "{{ProjectName}}.Repository/Configuration/ProjetoTemplateDbContext.cs",
         "searchText": "// Add DbSet for each entity",
